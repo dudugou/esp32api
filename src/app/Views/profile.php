@@ -1,13 +1,23 @@
+<?php $currentLocale = service('request')->getLocale(); ?>
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="<?= $currentLocale ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= lang('App.profile.title') ?> - ESP32 API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body.lang-ja { font-family: 'Noto Sans JP', sans-serif; }
+        body.lang-en { font-family: 'Inter', sans-serif; }
+        body.lang-ko { font-family: 'Noto Sans KR', sans-serif; }
+        body.lang-zh-CN { font-family: 'Noto Sans SC', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 lang-<?= $currentLocale ?>">
     <!-- ナビゲーションバー -->
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4">
@@ -41,6 +51,28 @@
     </nav>
 
     <div class="container mx-auto px-4 py-8">
+        <!-- パンくずリスト -->
+        <nav class="mb-6 max-w-2xl mx-auto" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm text-gray-600">
+                <li>
+                    <a href="/dashboard" class="hover:text-indigo-600 transition flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <?= lang('App.common.dashboard') ?>
+                    </a>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </li>
+                <li class="text-indigo-600 font-medium">
+                    <?= lang('App.common.profile') ?>
+                </li>
+            </ol>
+        </nav>
+        
         <div class="max-w-2xl mx-auto">
             <!-- ヘッダー -->
             <div class="mb-8">
@@ -150,12 +182,12 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium mb-2"><?= lang('App.profile.newPasswordConfirm') ?></label>
+                        <label class="block text-gray-700 font-medium mb-2"><?= lang('App.profile.confirmPassword') ?></label>
                         <div class="relative">
                             <input 
                                 type="password"
                                 id="confirmPasswordInput"
-                                placeholder="<?= lang('App.profile.newPasswordConfirmPlaceholder') ?>"
+                                placeholder="<?= lang('App.profile.confirmPasswordPlaceholder') ?>"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                             >
                             <button

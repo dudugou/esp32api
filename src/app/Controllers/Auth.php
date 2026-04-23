@@ -42,13 +42,14 @@ class Auth extends ResourceController
         if ($model->save($data)) {
             $user = $model->where('userid', $data['userid'])->first();
             unset($user['password']);
-            
+            log_message('info', '[AUTH] ユーザー登録 userid=' . $data['userid'] . ' IP=' . $this->request->getIPAddress());
             return $this->respondCreated([
                 'status'  => 'success',
                 'message' => 'ユーザー登録が完了しました',
                 'data'    => $user
             ]);
         } else {
+            log_message('error', '[AUTH] ユーザー登録失敗 userid=' . $data['userid'] . ' IP=' . $this->request->getIPAddress());
             return $this->fail('ユーザー登録に失敗しました', 500);
         }
     }
@@ -75,6 +76,7 @@ class Auth extends ResourceController
         $user = $model->authenticate($userid, $password);
 
         if (!$user) {
+            log_message('warning', '[AUTH] ログイン失敗 userid=' . $userid . ' IP=' . $this->request->getIPAddress());
             return $this->fail('ユーザーIDまたはパスワードが正しくありません', 401);
         }
 
@@ -82,6 +84,7 @@ class Auth extends ResourceController
         $token = generateJWT($user);
 
         unset($user['password']);
+        log_message('info', '[AUTH] ログイン成功 userid=' . $userid . ' user_id=' . ($user['id'] ?? '-') . ' IP=' . $this->request->getIPAddress());
 
         return $this->respond([
             'status'  => 'success',
@@ -170,13 +173,14 @@ class Auth extends ResourceController
         if ($model->update($userId, $updateData)) {
             $updatedUser = $model->find($userId);
             unset($updatedUser['password']);
-            
+            log_message('info', '[AUTH] プロフィール更新成功 user_id=' . $userId . ' IP=' . $this->request->getIPAddress());
             return $this->respond([
                 'status'  => 'success',
                 'message' => 'ユーザー情報を更新しました',
                 'data'    => $updatedUser
             ]);
         } else {
+            log_message('error', '[AUTH] プロフィール更新失敗 user_id=' . $userId . ' IP=' . $this->request->getIPAddress());
             return $this->fail('ユーザー情報の更新に失敗しました', 500);
         }
     }

@@ -1,13 +1,23 @@
+<?php $currentLocale = service('request')->getLocale(); ?>
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="<?= $currentLocale ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= lang('App.register.title') ?> - ESP32 API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body.lang-ja { font-family: 'Noto Sans JP', sans-serif; }
+        body.lang-en { font-family: 'Inter', sans-serif; }
+        body.lang-ko { font-family: 'Noto Sans KR', sans-serif; }
+        body.lang-zh-CN { font-family: 'Noto Sans SC', sans-serif; }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen lang-<?= $currentLocale ?>">
     <!-- 言語切り替え（右上） -->
     <div class="absolute top-4 right-4">
         <?= view('components/language_switcher') ?>
@@ -70,7 +80,7 @@
                                 id="email" 
                                 name="email"
                                 class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-                                placeholder="example@email.com"
+                                placeholder="<?= lang('App.register.emailPlaceholder') ?>"
                             >
                         </div>
                         <p class="mt-1 text-xs text-gray-500"><?= lang('App.register.emailHint') ?></p>
@@ -181,7 +191,7 @@
 
             <!-- フッター -->
             <div class="mt-8 text-center text-gray-500 text-sm">
-                <p>&copy; 2026 ESP32 API. All rights reserved.</p>
+                <p>&copy; 2026 ESP32 API. <?= lang('App.common.copyright') ?></p>
             </div>
         </div>
     </div>

@@ -27,6 +27,7 @@ class JwtAuth implements FilterInterface
         $token = getJWTFromRequest();
         
         if (!$token) {
+            log_message('warning', '[JWT AUTH] トークン未提供 IP=' . $request->getIPAddress() . ' URI=' . (string) $request->getUri());
             return Services::response()
                 ->setJSON([
                     'status' => 'error',
@@ -38,6 +39,7 @@ class JwtAuth implements FilterInterface
         $decoded = verifyJWT($token);
         
         if (!$decoded) {
+            log_message('warning', '[JWT AUTH] トークン無効または期限切れ IP=' . $request->getIPAddress() . ' URI=' . (string) $request->getUri());
             return Services::response()
                 ->setJSON([
                     'status' => 'error',
@@ -48,6 +50,7 @@ class JwtAuth implements FilterInterface
 
         // リクエストにユーザー情報を追加
         $request->user = $decoded->data;
+        log_message('info', '[JWT AUTH] 認証成功 user_id=' . ($decoded->data->id ?? '-') . ' IP=' . $request->getIPAddress() . ' URI=' . (string) $request->getUri());
     }
 
     /**

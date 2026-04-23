@@ -1,13 +1,23 @@
+<?php $currentLocale = service('request')->getLocale(); ?>
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="<?= $currentLocale ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= lang('App.dashboard.title') ?> - ESP32 API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body.lang-ja { font-family: 'Noto Sans JP', sans-serif; }
+        body.lang-en { font-family: 'Inter', sans-serif; }
+        body.lang-ko { font-family: 'Noto Sans KR', sans-serif; }
+        body.lang-zh-CN { font-family: 'Noto Sans SC', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 lang-<?= $currentLocale ?>">
     <!-- ナビゲーションバー -->
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4">

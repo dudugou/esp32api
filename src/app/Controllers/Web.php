@@ -28,6 +28,7 @@ class Web extends BaseController
      */
     public function login()
     {
+        log_message('info', '[WEB] ログイン画面アクセス IP=' . $this->request->getIPAddress() . ' UA=' . $this->request->getUserAgent()->getAgentString());
         return view('login');
     }
 

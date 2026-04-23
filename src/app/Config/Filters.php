@@ -35,6 +35,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'jwtauth'       => \App\Filters\JwtAuth::class,
+        'apilogger'     => \App\Filters\ApiLogger::class,
     ];
 
     /**
@@ -58,7 +59,7 @@ class Filters extends BaseFilters
         'after' => [
             'pagecache',   // Web Page Caching
             'performance', // Performance Metrics
-            'toolbar',     // Debug Toolbar
+            // toolbar は api/* を除外するため globals へ移動
         ],
     ];
 
@@ -78,6 +79,8 @@ class Filters extends BaseFilters
             // 'invalidchars',
         ],
         'after' => [
+            // API ルートではバイナリレスポンスに Debug Toolbar を適用しない
+            'toolbar' => ['except' => 'api/*'],
             // 'honeypot',
             // 'secureheaders',
         ],
@@ -107,5 +110,10 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'apilogger' => [
+            'before' => ['api/*'],
+            'after'  => ['api/*'],
+        ],
+    ];
 }

@@ -25,6 +25,7 @@ services:
       - ./src:/var/www/html
     environment:
       - COMPOSER_ALLOW_SUPERUSER=1
+      - CI_ENVIRONMENT=development
     depends_on:
       - mysql
     networks:

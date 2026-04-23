@@ -52,4 +52,7 @@ $routes->group('api', ['namespace' => 'App\Controllers', 'filter' => 'jwtauth'],
     // デバイスデータ
     $routes->post('device/data', 'Api::deviceData');
     $routes->get('device/data', 'Api::getDeviceData');
+
+    // ESP32カメラ 写真アップロード
+    $routes->post('device/photo', 'Api::uploadPhoto');
 });
